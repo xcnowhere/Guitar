@@ -1,0 +1,5 @@
+{
+  "name": "GuitarGenealogy",
+  "description": "An interactive mind map of classic electric guitars (Fender & Gibson) powered by Gemini. Explore models, generate AI descriptions, and visualize customs designs.",
+  "requestFramePermissions": []
+}
