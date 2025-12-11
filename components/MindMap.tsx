@@ -49,7 +49,9 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
     const leafCount = root.leaves().length;
     const minWidthPerNode = 350; 
     const treeWidth = Math.max(innerWidth, leafCount * minWidthPerNode);
-    const treeHeight = Math.max(innerHeight, 800);
+    
+    // Adjusted vertical height: Multiplier increased to 2.0 as requested
+    const treeHeight = Math.max(innerHeight * 2.0, 1600); 
     
     const treeLayout = d3.tree<TreeData>()
         .size([treeWidth, treeHeight])
@@ -74,14 +76,14 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
         svg.call(zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(initialScale));
     }
 
-    // Links
+    // Links (Darker stroke for light theme)
     g.selectAll(".link")
       .data(root.links())
       .enter()
       .append("path")
       .attr("class", "link")
       .attr("fill", "none")
-      .attr("stroke", "#94a3b8")
+      .attr("stroke", "#9ca3af") // gray-400
       .attr("stroke-width", 3)
       .attr("d", d3.linkVertical<any, any>()
         .x(d => d.x)
@@ -100,13 +102,15 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
     nodes.append("circle")
       .attr("r", d => d.data.type === 'root' ? 16 : 10) 
       .attr("fill", d => {
-          if (d.data.type === 'root') return '#f59e0b';
-          if (d.data.brand === 'Fender') return '#3b82f6';
-          if (d.data.brand === 'Gibson') return '#ef4444';
-          return '#94a3b8';
+          if (d.data.type === 'root') return '#d97706'; // amber-600
+          if (d.data.brand === 'Fender') return '#2563eb'; // blue-600
+          if (d.data.brand === 'Gibson') return '#dc2626'; // red-600
+          return '#d1d5db'; // gray-300
       })
       .attr("stroke", "#ffffff")
       .attr("stroke-width", 3)
+      .attr("class", "shadow-md")
+      .style("filter", "drop-shadow(0px 2px 2px rgba(0,0,0,0.1))")
       .on("click", (event, d) => {
         if (d.data.type === 'model' && d.data.data) {
           onNodeSelect(d.data.data);
@@ -119,16 +123,19 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
       .attr("x", 0)
       .attr("text-anchor", "middle")
       .text(d => d.data.label)
-      .style("font-size", d => d.data.type === 'root' ? "48px" : "36px")
+      // Increased font sizes as requested
+      .style("font-size", d => d.data.type === 'root' ? "56px" : "42px")
       .style("font-weight", "bold")
       .style("pointer-events", "none");
 
+    // Label Halo (White for light theme)
     labels.clone(true).lower()
-      .attr("stroke", "#020617")
+      .attr("stroke", "#ffffff") // White stroke
       .attr("stroke-width", 8)
       .attr("fill", "none");
     
-    labels.attr("fill", "#ffffff");
+    // Label Text (Dark for light theme)
+    labels.attr("fill", "#111827"); // gray-900
 
     // --- Render Images (Vertical aspect ratio for full guitar) ---
     nodes.each(function(d) {
@@ -151,6 +158,16 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
                     }
                 });
 
+            // Card background (Dark Gray as requested)
+            imgGroup.append("rect")
+                .attr("width", imgW)
+                .attr("height", imgH)
+                .attr("rx", 12)
+                .attr("fill", "#1f2937") // gray-800 Dark Gray background
+                .attr("stroke", "#374151") // gray-700 border
+                .attr("stroke-width", 2)
+                .style("filter", "drop-shadow(0px 4px 6px rgba(0,0,0,0.1))");
+
             const clipId = `clip-${d.data.id}`;
             imgGroup.append("clipPath")
                 .attr("id", clipId)
@@ -165,23 +182,15 @@ const MindMap: React.FC<MindMapProps> = ({ data, onNodeSelect }) => {
                 .attr("height", imgH)
                 .attr("clip-path", `url(#${clipId})`)
                 .attr("preserveAspectRatio", "xMidYMid slice");
-            
-            imgGroup.append("rect")
-                .attr("width", imgW)
-                .attr("height", imgH)
-                .attr("rx", 12)
-                .attr("fill", "none")
-                .attr("stroke", "#fff")
-                .attr("stroke-width", 3);
         }
     });
 
   }, [dimensions, data, onNodeSelect]);
 
   return (
-    <div ref={wrapperRef} className="w-full h-full bg-slate-950 rounded-xl border border-slate-800 shadow-inner overflow-hidden relative">
-        <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur p-3 rounded-lg border border-slate-700 text-xs text-slate-300 pointer-events-none">
-            <h3 className="font-bold text-slate-100 mb-1 text-sm">吉他图谱 (Guitar Map)</h3>
+    <div ref={wrapperRef} className="w-full h-full bg-gray-100 rounded-xl border border-gray-200 shadow-inner overflow-hidden relative">
+        <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur p-3 rounded-lg border border-gray-200 text-xs text-gray-600 pointer-events-none shadow-sm">
+            <h3 className="font-bold text-gray-900 mb-1 text-sm">吉他图谱 (Guitar Map)</h3>
             <p className="mb-1">🖱️ 拖动空白处平移 (Drag to pan)</p>
             <p className="mb-1">🔍 滚轮缩放 (Scroll to zoom)</p>
             <p className="mb-1">👆 点击节点查看详细 (Details)</p>

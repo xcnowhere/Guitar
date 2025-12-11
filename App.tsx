@@ -72,20 +72,20 @@ function App() {
   }, []); // Empty dependency array ensures this runs once
 
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-white font-sans overflow-hidden">
+    <div className="flex flex-col h-screen bg-gray-100 text-gray-900 font-sans overflow-hidden">
       {/* Header */}
-      <header className="h-16 border-b border-slate-800 bg-slate-900 flex items-center justify-between px-6 z-20">
+      <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <GitGraph className="text-amber-500" size={28} />
-          <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent">
+          <GitGraph className="text-amber-600" size={28} />
+          <h1 className="text-xl font-bold tracking-tight text-gray-800">
             GuitarGenealogy (吉他图谱)
           </h1>
         </div>
-        <div className="flex items-center gap-4 text-sm text-slate-400">
+        <div className="flex items-center gap-4 text-sm text-gray-500">
             <span className="hidden sm:inline">Powered by Google Gemini</span>
             <button 
                 onClick={() => alert("图片正在自动生成中。浏览树状图探索经典电吉他。(Images are generating automatically. Navigate to explore.)")}
-                className="p-2 hover:bg-slate-800 rounded-full transition"
+                className="p-2 hover:bg-gray-100 rounded-full transition text-gray-600"
             >
                 <Info size={20} />
             </button>
@@ -94,7 +94,7 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 relative flex">
-        <div className="flex-1 p-0 overflow-hidden">
+        <div className="flex-1 p-0 overflow-hidden bg-gray-100">
             <MindMap data={treeData} onNodeSelect={handleNodeSelect} />
         </div>
 

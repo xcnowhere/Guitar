@@ -50,26 +50,26 @@ const GuitarDetail: React.FC<GuitarDetailProps> = ({ guitar, onClose, onUpdate }
   if (!guitar) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full sm:w-[500px] bg-slate-900 border-l border-slate-700 shadow-2xl transform transition-transform duration-300 z-50 overflow-y-auto flex flex-col">
+    <div className="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-white border-l border-slate-200 shadow-2xl transform transition-transform duration-300 z-50 overflow-y-auto flex flex-col">
       <div className="p-6 flex-1">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white">{guitar.name}</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition">
-            <X size={24} />
+          <h2 className="text-3xl font-bold text-slate-900">{guitar.name}</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-900 transition">
+            <X size={32} />
           </button>
         </div>
 
         {/* Text Section (Now at the top) */}
-        <div className="prose prose-invert prose-sm mb-8">
-          <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-            <FileText size={18} className="text-blue-400"/> 详细信息 (Details)
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-slate-800 mb-3 flex items-center gap-2">
+            <FileText size={24} className="text-blue-600"/> 详细信息 (Details)
           </h3>
           {loadingText ? (
-             <div className="flex items-center gap-2 text-slate-400 py-4">
-               <Loader2 className="animate-spin" size={16} /> 正在整理资料...
+             <div className="flex items-center gap-2 text-slate-500 py-4 text-lg">
+               <Loader2 className="animate-spin" size={24} /> 正在整理资料...
              </div>
           ) : (
-            <div className="text-slate-300 leading-relaxed whitespace-pre-line">
+            <div className="text-slate-700 leading-relaxed whitespace-pre-line text-lg">
               {description || guitar.description}
             </div>
           )}
@@ -77,11 +77,11 @@ const GuitarDetail: React.FC<GuitarDetailProps> = ({ guitar, onClose, onUpdate }
 
         {/* Image Section (Now below text) */}
         <div className="mb-6 relative">
-          <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-            <ImageIcon size={18} className="text-purple-400"/> 外观 (Appearance)
+          <h3 className="text-xl font-semibold text-slate-800 mb-3 flex items-center gap-2">
+            <ImageIcon size={24} className="text-purple-600"/> 外观 (Appearance)
           </h3>
           <div 
-             className="bg-slate-800 rounded-lg aspect-[3/4] flex items-center justify-center overflow-hidden relative group border border-slate-700"
+             className="bg-slate-50 rounded-lg aspect-[3/4] flex items-center justify-center overflow-hidden relative group border border-slate-200"
           >
             {loadingImage ? (
               <Loader2 className="animate-spin text-amber-500" size={48} />
@@ -91,9 +91,9 @@ const GuitarDetail: React.FC<GuitarDetailProps> = ({ guitar, onClose, onUpdate }
               <div className="text-center p-4">
                  <button 
                   onClick={handleGenerateImage}
-                  className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                  className="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 px-4 py-2 rounded-lg flex items-center gap-2 transition text-lg shadow-sm"
                  >
-                    <ImageIcon size={20} />
+                    <ImageIcon size={24} />
                     重新生成图片
                  </button>
               </div>

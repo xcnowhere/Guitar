@@ -25,8 +25,8 @@ export const generateGuitarDetails = async (guitarName: string): Promise<string>
 export const generateGuitarImage = async (guitarName: string): Promise<string | undefined> => {
   const ai = getClient();
   try {
-    // Modified prompt for Vertical Full Body shots
-    const basePrompt = "A professional product photography shot of a single electric guitar, VERTICAL orientation, FULL BODY completely visible from headstock to strap button. UNPROPPED, floating in center. Isolated on a clean dark grey studio background. High resolution, 4k.";
+    // Modified prompt for Vertical Full Body shots on DARK GRAY background to match UI card
+    const basePrompt = "A professional product photography shot of a single electric guitar, VERTICAL orientation, FULL BODY completely visible from headstock to strap button. UNPROPPED, floating in center. Isolated on a clean DARK GRAY studio background. High resolution, 4k.";
     
     let specificDetails = "";
     const lowerName = guitarName.toLowerCase();
